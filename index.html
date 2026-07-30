@@ -1,5 +1,511 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Whispering-Words Studio</title><style>body{margin:0;background:#000;color:#fff;font-family:'Courier New',monospace;height:100vh;display:flex;flex-direction:column;overflow:hidden}.header{background:#0a0a0a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #D4AF37}.logo{color:#D4AF37;font-weight:bold;font-size:16px}.btn{background:#1a1a1a;border:1px solid #D4AF37;color:#D4AF37;padding:6px 12px;border-radius:4px;font-size:12px;cursor:pointer}.toolbar{display:flex;gap:6px;padding:10px;background:#000;border-bottom:1px solid #222;overflow-x:auto}.tool{background:#111;border:1px solid #333;color:#D4AF37;padding:6px 12px;font-size:11px;white-space:nowrap;border-radius:4px;cursor:pointer}.tool:active{background:#D4AF37;color:#000}#editor{flex:1;background:#000;color:#fff;border:none;padding:18px;font-family:'Courier New',monospace;font-size:15px;line-height:1.7;outline:none;resize:none}</style></head><body><div class="header"><div class="logo">Whispering-Words</div><div><select id="format" class="btn" style="margin-right:5px"><option>SCREENPLAY</option><option>RADIO DRAMA</option><option>THEATRE</option></select><button class="btn" onclick="save()">💾 Save</button></div></div><div class="toolbar" id="tools"></div><textarea id="editor" placeholder="INT. WHISPERING WORDS STUDIO - NIGHT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Whispering Words Studio</title>
 
-The cursor blinks. Your story begins...
+<style>
+*{box-sizing:border-box}
 
-Type here, or tap the buttons above for formatting."></textarea><script>const formats={SCREENPLAY:[["SCENE","\\nINT. LOCATION - DAY\\n\\n"],["ACTION",""],["CHARACTER","\\nCHARACTER NAME\\n"],["DIALOGUE"," "],["PAREN"," ("],["TRANS","\\nCUT TO:\\n\\n"]],"RADIO DRAMA":[["SCENE","\\nSCENE 1.\\n\\n"],["NARRATOR","\\nNARRATOR:\\n"],["CHARACTER","\\nNAME:\\n"],["SFX","\\n[SFX: "],["MUSIC","\\n[MUSIC: "]],"THEATRE":[["ACT","\\nACT I\\n\\n"],["SCENE","\\nSCENE 1\\n\\n"],["CHARACTER","\\nCHARACTER NAME.\\n"],["DIALOGUE"," "],["STAGE","\\n[Stage direction]\\n"]]};function loadTools(){const f=document.getElementById('format').value;const t=document.getElementById('tools');t.innerHTML='';formats[f].forEach(([label,text])=>{const b=document.createElement('button');b.className='tool';b.textContent=label;b.onclick=()=>{const e=document.getElementById('editor');const s=e.selectionStart;e.value=e.value.slice(0,s)+text+e.value.slice(e.selectionEnd);e.selectionStart=e.selectionEnd=s+text.length;e.focus()};t.appendChild(b)})}document.getElementById('format').onchange=loadTools;loadTools();const ed=document.getElementById('editor');ed.value=localStorage.getItem('wws-story')||'';ed.oninput=()=>localStorage.setItem('wws-story',ed.value);function save(){localStorage.setItem('wws-story',ed.value);alert('✓ Saved to browser!')}</script></body></html>
+body{
+  margin:0;
+  background:#080b10;
+  color:#e9edf5;
+  font-family:Arial,sans-serif;
+}
+
+header{
+  padding:16px;
+  background:#10151d;
+  border-bottom:1px solid #29313d;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:800;
+  color:#d4af37;
+}
+
+.subtitle{
+  font-size:12px;
+  color:#8792a3;
+  margin-top:4px;
+}
+
+.toolbar{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:12px 0 2px;
+}
+
+button,select{
+  background:#171e28;
+  color:#e9edf5;
+  border:1px solid #303b49;
+  border-radius:7px;
+  padding:9px 12px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+button:hover{
+  border-color:#d4af37;
+}
+
+.primary{
+  background:#d4af37;
+  color:#080b10;
+  border-color:#d4af37;
+  font-weight:bold;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
+}
+
+.panel{
+  background:#10151d;
+  border:1px solid #29313d;
+  border-radius:10px;
+  margin-bottom:16px;
+  overflow:hidden;
+}
+
+.panel-title{
+  padding:12px 15px;
+  border-bottom:1px solid #29313d;
+  font-weight:bold;
+}
+
+.editor{
+  min-height:65vh;
+  padding:25px;
+  outline:none;
+  font-family:"Courier New",monospace;
+  font-size:15px;
+  line-height:1.65;
+  white-space:pre-wrap;
+}
+
+.editor:focus{
+  box-shadow:inset 0 0 0 1px #d4af37;
+}
+
+.status{
+  padding:9px 14px;
+  color:#8995a7;
+  font-size:12px;
+  border-top:1px solid #29313d;
+}
+
+.ai{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  padding:14px;
+}
+
+.ai button{
+  min-height:55px;
+}
+
+.footer{
+  text-align:center;
+  padding:25px;
+  color:#667386;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">WHISPERING WORDS STUDIO</div>
+  <div class="subtitle">AI Filmmaking & Storytelling Workspace</div>
+
+  <div class="toolbar">
+    <button onclick="formatText('SCENE')">SCENE</button>
+    <button onclick="formatText('CHARACTER')">CHARACTER</button>
+    <button onclick="formatText('DIALOGUE')">DIALOGUE</button>
+    <button onclick="formatText('ACTION')">ACTION</button>
+    <button onclick="formatText('TRANSITION')">TRANSITION</button>
+
+    <select id="mode" onchange="changeMode()">
+      <option>SCREENPLAY</option>
+      <option>RADIO DRAMA</option>
+      <option>THEATRE</option>
+    </select>
+
+    <button onclick="undoEdit()">UNDO</button>
+    <button onclick="redoEdit()">REDO</button>
+    <button onclick="saveProject()">SAVE</button>
+    <button onclick="loadProject()">LOAD</button>
+  </div>
+</header>
+
+<main>
+
+<div class="panel">
+  <div class="panel-title">Story Workspace</div>
+
+  <div
+    id="editor"
+    class="editor"
+    contenteditable="true"
+    spellcheck="true"
+    oninput="updateStatus()"
+  >FADE IN:
+
+INT. UNKNOWN LOCATION - NIGHT
+
+The cursor blinks.
+
+Your story begins...
+
+</div>
+
+  <div class="status" id="status">
+    0 words • 0 characters
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-title">Creative Intelligence</div>
+
+  <div class="ai">
+
+    <button onclick="aiAction('idea')">
+      💡 STORY IDEA
+    </button>
+
+    <button onclick="aiAction('character')">
+      👤 CHARACTER BUILDER
+    </button>
+
+    <button onclick="aiAction('scene')">
+      🎬 SCENE BUILDER
+    </button>
+
+    <button onclick="aiAction('dialogue')">
+      💬 DIALOGUE ASSISTANT
+    </button>
+
+    <button onclick="aiAction('shot')">
+      📷 SHOT PLANNER
+    </button>
+
+    <button onclick="aiAction('storyboard')">
+      🖼️ STORYBOARD
+    </button>
+
+  </div>
+</div>
+
+</main>
+
+<div class="footer">
+  Whispering Words Studio • Creative filmmaking workspace
+</div>
+
+<script>
+
+const editor=document.getElementById("editor");
+
+let undoStack=[];
+let redoStack=[];
+let lastText=editor.innerText;
+
+function updateStatus(){
+
+  const text=editor.innerText.trim();
+
+  const words=text
+    ? text.split(/\s+/).length
+    : 0;
+
+  document.getElementById("status").textContent=
+    words+" words • "+
+    text.length+" characters";
+
+  if(text!==lastText){
+
+    undoStack.push(lastText);
+
+    if(undoStack.length>50){
+      undoStack.shift();
+    }
+
+    lastText=text;
+    redoStack=[];
+  }
+}
+
+function formatText(type){
+
+  const templates={
+
+    SCENE:
+`
+
+
+INT. LOCATION - DAY
+
+`,
+
+    CHARACTER:
+`
+
+
+CHARACTER NAME
+`,
+
+    DIALOGUE:
+`
+
+Dialogue goes here.
+`,
+
+    ACTION:
+`
+
+Describe what the audience sees.
+`,
+
+    TRANSITION:
+`
+
+CUT TO:
+`
+
+  };
+
+  editor.focus();
+
+  document.execCommand(
+    "insertText",
+    false,
+    templates[type] || ""
+  );
+
+  updateStatus();
+}
+
+function undoEdit(){
+
+  if(!undoStack.length)return;
+
+  redoStack.push(editor.innerText);
+
+  const previous=undoStack.pop();
+
+  editor.innerText=previous;
+
+  lastText=previous;
+
+  updateStatus();
+}
+
+function redoEdit(){
+
+  if(!redoStack.length)return;
+
+  undoStack.push(editor.innerText);
+
+  const next=redoStack.pop();
+
+  editor.innerText=next;
+
+  lastText=next;
+
+  updateStatus();
+}
+
+function saveProject(){
+
+  localStorage.setItem(
+    "whisperingWordsProject",
+    editor.innerText
+  );
+
+  alert("Project saved on this device.");
+}
+
+function loadProject(){
+
+  const saved=
+    localStorage.getItem(
+      "whisperingWordsProject"
+    );
+
+  if(saved){
+
+    editor.innerText=saved;
+
+    lastText=saved;
+
+    updateStatus();
+
+    alert("Project loaded.");
+  }
+  else{
+    alert("No saved project found.");
+  }
+}
+
+function changeMode(){
+
+  const mode=
+    document.getElementById("mode").value;
+
+  if(mode==="RADIO DRAMA"){
+
+    editor.innerText=
+`RADIO DRAMA
+
+TITLE:
+
+NARRATOR:
+The story begins...
+
+SFX:
+[Sound effect]
+
+CHARACTER:
+Dialogue...
+`;
+
+  }
+
+  if(mode==="THEATRE"){
+
+    editor.innerText=
+`THEATRE PLAY
+
+ACT I
+
+SCENE 1
+
+STAGE:
+Describe the stage.
+
+CHARACTER:
+Dialogue...
+
+[Stage direction]
+`;
+
+  }
+
+  if(mode==="SCREENPLAY"){
+
+    editor.innerText=
+`FADE IN:
+
+INT. LOCATION - DAY
+
+The story begins...
+`;
+
+  }
+
+  lastText=editor.innerText;
+
+  updateStatus();
+}
+
+function aiAction(type){
+
+  const messages={
+
+    idea:
+`AI STORY IDEA
+
+A mysterious event changes the life of an ordinary person.
+
+Expand this idea into a complete cinematic story.`,
+
+    character:
+`AI CHARACTER BUILDER
+
+Name:
+Age:
+Occupation:
+Personality:
+Goal:
+Fear:
+Secret:
+Character arc:`,
+
+    scene:
+`AI SCENE BUILDER
+
+Location:
+Time:
+Characters:
+Objective:
+Conflict:
+Visual atmosphere:
+Scene outcome:`,
+
+    dialogue:
+`AI DIALOGUE ASSISTANT
+
+Character 1:
+Character 2:
+
+Write natural cinematic dialogue with subtext and conflict.`,
+
+    shot:
+`SHOT PLANNER
+
+SHOT 1:
+Framing:
+Camera:
+Movement:
+Lens:
+Lighting:
+Sound:
+
+SHOT 2:`,
+
+    storyboard:
+`STORYBOARD PLAN
+
+FRAME 1:
+Visual:
+Camera:
+Action:
+Dialogue:
+
+FRAME 2:
+Visual:
+Camera:
+Action:
+Dialogue:`
+  };
+
+  editor.focus();
+
+  document.execCommand(
+    "insertText",
+    false,
+    "\n\n"+messages[type]+"\n"
+  );
+
+  updateStatus();
+}
+
+updateStatus();
+
+</script>
+
+</body>
+  </html>
