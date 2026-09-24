@@ -1433,14 +1433,296 @@ function closeNewProject(){
 }
 
 
-function createProject(){
+  function createProject(){
 
-  const title=
+  const title =
     document.getElementById('projectTitle').value.trim();
 
-  const type=
+  const type =
     document.getElementById('projectType').value;
 
   if(!title){
+    alert('Please enter a film title.');
+    return;
+  }
 
-   
+  const projects = document.getElementById('projects');
+
+  const project = document.createElement('div');
+  project.className = 'project';
+
+  project.innerHTML = `
+    <div class="project-title">
+      ${escapeHTML(title)}
+    </div>
+
+    <div class="project-meta">
+      ${escapeHTML(type)} • Draft 1
+    </div>
+
+    <div class="project-actions">
+      <button class="secondary"
+        onclick="showPage('screenplay')">
+        Open
+      </button>
+    </div>
+  `;
+
+  projects.prepend(project);
+
+  updateProjectCount();
+
+  document.getElementById('projectTitle').value = '';
+
+  closeNewProject();
+
+  alert('Project created successfully!');
+}
+
+
+function escapeHTML(text){
+
+  const div = document.createElement('div');
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+
+/* SCREENPLAY */
+
+function formatText(text){
+
+  const editor = document.getElementById('editor');
+
+  if(!editor) return;
+
+  editor.focus();
+
+  const selection = window.getSelection();
+
+  if(selection.rangeCount > 0){
+
+    const range = selection.getRangeAt(0);
+
+    range.deleteContents();
+
+    const node = document.createTextNode(
+      text + '\n'
+    );
+
+    range.insertNode(node);
+
+    range.setStartAfter(node);
+    range.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+  }else{
+
+    editor.innerText += '\n' + text + '\n';
+
+  }
+
+  updateWordCount();
+}
+
+
+function saveScreenplay(){
+
+  const editor = document.getElementById('editor');
+
+  if(!editor) return;
+
+  localStorage.setItem(
+    'whisperingWordsScreenplay',
+    editor.innerText
+  );
+
+  alert('Screenplay saved on this device.');
+}
+
+
+function loadScreenplay(){
+
+  const saved =
+    localStorage.getItem(
+      'whisperingWordsScreenplay'
+    );
+
+  const editor =
+    document.getElementById('editor');
+
+  if(saved && editor){
+
+    editor.innerText = saved;
+
+  }
+
+  updateWordCount();
+}
+
+
+function updateWordCount(){
+
+  const editor =
+    document.getElementById('editor');
+
+  const counter =
+    document.getElementById('wordCount');
+
+  if(!editor || !counter) return;
+
+  const text =
+    editor.innerText.trim();
+
+  const words =
+    text ? text.split(/\s+/).length : 0;
+
+  counter.textContent =
+    words.toLocaleString();
+}
+
+
+/* STORY DEVELOPMENT */
+
+function storyIdea(){
+
+  const output =
+    document.getElementById('storyOutput');
+
+  if(!output) return;
+
+  output.style.display = 'block';
+
+  output.innerHTML = `
+    <strong>Story Architect</strong><br><br>
+
+    Let's develop your story. Start with these five
+    questions:<br><br>
+
+    <strong>1. Premise:</strong>
+    What is your story about?<br>
+
+    <strong>2. Protagonist:</strong>
+    Who is the main character?<br>
+
+    <strong>3. Goal:</strong>
+    What do they want?<br>
+
+    <strong>4. Conflict:</strong>
+    What stands in their way?<br>
+
+    <strong>5. Stakes:</strong>
+    What happens if they fail?
+  `;
+
+}
+
+
+/* AI ASSISTANT */
+
+function askAI(){
+
+  const input =
+    document.getElementById('aiInput');
+
+  const chat =
+    document.getElementById('chat');
+
+  if(!input || !chat) return;
+
+  const message =
+    input.value.trim();
+
+  if(!message) return;
+
+  const userMessage =
+    document.createElement('div');
+
+  userMessage.className =
+    'ai-message';
+
+  userMessage.innerHTML =
+    '<strong>You:</strong><br>' +
+    escapeHTML(message);
+
+  chat.appendChild(userMessage);
+
+  input.value = '';
+
+  const aiMessage =
+    document.createElement('div');
+
+  aiMessage.className =
+    'ai-message';
+
+  aiMessage.innerHTML = `
+    <strong>Sibali:</strong><br>
+    I understand your creative question.
+    The AI intelligence layer can be connected next
+    so I can analyse your story, develop characters,
+    improve scenes and help build your film.
+  `;
+
+  chat.appendChild(aiMessage);
+
+}
+
+
+/* PROJECT STATISTICS */
+
+function updateProjectCount(){
+
+  const projects =
+    document.querySelectorAll(
+      '#projects .project'
+    );
+
+  const counter =
+    document.getElementById('projectCount');
+
+  if(counter){
+
+    counter.textContent =
+      projects.length;
+
+  }
+
+}
+
+
+/* CLOSE MODAL WHEN CLICKING OUTSIDE */
+
+document
+  .getElementById('projectModal')
+  .addEventListener('click', function(event){
+
+    if(event.target === this){
+
+      closeNewProject();
+
+    }
+
+  });
+
+
+/* LOAD SAVED SCREENPLAY */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    loadScreenplay();
+
+    updateProjectCount();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
