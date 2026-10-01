@@ -7,541 +7,474 @@
 <title>Whispering Words Studio</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-:root{
-  --bg:#08070d;
-  --panel:#12101b;
-  --panel2:#181522;
-  --border:#292338;
-  --purple:#9b5cff;
-  --purple2:#7c3aed;
-  --text:#f5f3fa;
-  --muted:#9b96aa;
-  --green:#45e09a;
-  --danger:#ff6577;
+:root {
+    --bg: #08070d;
+    --panel: #12101b;
+    --panel2: #181522;
+    --border: #29243a;
+    --purple: #9b5cff;
+    --purple-dark: #7c3aed;
+    --text: #f5f3ff;
+    --muted: #aaa5bb;
+    --success: #45d483;
 }
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
 }
 
-button{
-  font-family:inherit;
+button,
+input,
+textarea,
+select {
+    font: inherit;
 }
 
-.app{
-  min-height:100vh;
+button {
+    cursor: pointer;
+}
+
+.app {
+    min-height: 100vh;
 }
 
 /* HEADER */
 
-.header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:#0d0b14;
-  border-bottom:1px solid var(--border);
-  padding:15px 20px;
+.header {
+    background: rgba(18, 16, 27, 0.98);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.header-inner{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:22px;
-  font-weight:800;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.logo span{
-  color:var(--purple);
+.logo {
+    font-size: 25px;
 }
 
-.online{
-  color:var(--green);
-  font-size:12px;
-  margin-left:8px;
+.brand h1 {
+    font-size: 18px;
 }
 
-.header-actions{
-  display:flex;
-  gap:8px;
+.status {
+    color: var(--success);
+    font-size: 12px;
+    margin-top: 3px;
 }
 
-.icon-btn{
-  background:var(--panel2);
-  border:1px solid var(--border);
-  color:white;
-  border-radius:9px;
-  padding:9px 12px;
-  cursor:pointer;
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel2);
+    color: white;
 }
 
 /* NAVIGATION */
 
-.nav{
-  background:#0e0c15;
-  border-bottom:1px solid var(--border);
-  overflow-x:auto;
+.nav {
+    background: #0e0c15;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
 }
 
-.nav-inner{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  gap:5px;
-  padding:8px 15px;
-  min-width:max-content;
+.nav-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    gap: 5px;
+    padding: 8px 15px;
+    white-space: nowrap;
 }
 
-.nav button{
-  background:transparent;
-  border:0;
-  color:#aaa4b8;
-  padding:11px 15px;
-  border-radius:9px;
-  cursor:pointer;
-  font-size:14px;
+.nav button {
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    padding: 11px 14px;
+    border-radius: 8px;
 }
 
 .nav button:hover,
-.nav button.active{
-  background:#251a35;
-  color:white;
-}
-
-.nav button.active{
-  color:#c28cff;
+.nav button.active {
+    background: var(--purple-dark);
+    color: white;
 }
 
 /* MAIN */
 
-main{
-  max-width:1400px;
-  margin:auto;
-  padding:25px 18px 60px;
+main {
+    max-width: 1400px;
+    margin: auto;
+    padding: 25px 18px 60px;
 }
 
-.page{
-  display:none;
+.page {
+    display: none;
 }
 
-.page.active{
-  display:block;
+.page.active {
+    display: block;
 }
 
-/* WELCOME */
-
-.welcome{
-  background:
-    radial-gradient(circle at 85% 20%,rgba(155,92,255,.22),transparent 35%),
-    linear-gradient(135deg,#171221,#0f0d16);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:30px;
-  margin-bottom:22px;
+.hero {
+    background:
+        radial-gradient(circle at top right, rgba(155,92,255,.22), transparent 40%),
+        var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 22px;
 }
 
-.welcome h1{
-  font-size:34px;
-  margin:0 0 10px;
+.hero h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-.welcome p{
-  color:#aaa5b5;
-  line-height:1.7;
-  max-width:750px;
+.hero p {
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 700px;
 }
 
-.primary{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;
-  border:0;
-  padding:13px 20px;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
+.primary,
+.secondary {
+    border-radius: 9px;
+    padding: 12px 18px;
+    border: none;
+    margin-top: 20px;
 }
 
-.primary:hover{
-  opacity:.9;
+.primary {
+    background: var(--purple-dark);
+    color: white;
+}
+
+.primary:hover {
+    background: var(--purple);
+}
+
+.secondary {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
 }
 
 /* CARDS */
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:25px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
 }
 
-.card h3{
-  margin:0 0 8px;
+.card.clickable {
+    cursor: pointer;
 }
 
-.card p{
-  color:var(--muted);
-  line-height:1.5;
+.card.clickable:hover {
+    border-color: var(--purple);
+    transform: translateY(-2px);
 }
 
-.feature{
-  min-height:160px;
+.card-icon {
+    font-size: 30px;
+    margin-bottom: 12px;
 }
 
-.feature-icon{
-  font-size:30px;
-  margin-bottom:15px;
+.card h3 {
+    margin-bottom: 8px;
 }
 
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin:28px 0 14px;
+.card p {
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 14px;
 }
 
-.section-title h2{
-  margin:0;
+/* SECTION */
+
+.section-title {
+    margin: 28px 0 14px;
+    font-size: 21px;
 }
 
 /* PROJECTS */
 
-.projects{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
+.projects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 
-.project{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
+.project {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
 }
 
-.project-title{
-  font-weight:bold;
-  font-size:18px;
-  margin-bottom:8px;
+.project-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.project-meta{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.project-actions{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
-}
-
-.secondary{
-  background:#1b1725;
-  border:1px solid var(--border);
-  color:white;
-  padding:9px 13px;
-  border-radius:8px;
-  cursor:pointer;
+.project-meta {
+    color: var(--muted);
+    font-size: 13px;
 }
 
 /* STATS */
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
 }
 
-.stat{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
+.stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
 }
 
-.stat-number{
-  font-size:30px;
-  font-weight:bold;
-  margin-top:7px;
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--purple);
 }
 
-.stat-label{
-  color:var(--muted);
+.stat-label {
+    color: var(--muted);
+    margin-top: 5px;
 }
 
-/* WORKSPACE */
+/* EDITOR */
 
-.workspace{
-  display:grid;
-  grid-template-columns:230px 1fr;
-  gap:15px;
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
 }
 
-.side-panel{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
-  height:max-content;
+.editor-toolbar button {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    border-radius: 7px;
 }
 
-.side-panel button{
-  width:100%;
-  background:transparent;
-  border:0;
-  color:#aaa4b8;
-  padding:12px;
-  text-align:left;
-  border-radius:8px;
-  cursor:pointer;
+.editor {
+    min-height: 500px;
+    background: #f5f2ea;
+    color: #171717;
+    border-radius: 10px;
+    padding: 30px;
+    line-height: 1.7;
+    outline: none;
+    font-family: Georgia, serif;
 }
 
-.side-panel button:hover{
-  background:#241b31;
-  color:white;
-}
-
-.editor-panel{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.editor-toolbar{
-  padding:12px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-}
-
-.editor{
-  min-height:520px;
-  padding:25px;
-  outline:none;
-  font-family:"Courier New",monospace;
-  font-size:15px;
-  line-height:1.7;
-  white-space:pre-wrap;
-}
-
-.editor:focus{
-  box-shadow:inset 0 0 0 1px var(--purple);
+.editor-info {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    margin-top: 10px;
 }
 
 /* AI */
 
-.ai-box{
-  background:linear-gradient(135deg,#191126,#100d17);
-  border:1px solid #3a2756;
-  border-radius:15px;
-  padding:22px;
+.ai-box {
+    max-width: 850px;
 }
 
-.ai-message{
-  background:#201a2b;
-  border-radius:10px;
-  padding:14px;
-  margin:10px 0;
-  color:#c8c1d2;
-  line-height:1.6;
+.ai-message {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
+    line-height: 1.6;
 }
 
-.ai-input{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
+.ai-input {
+    display: flex;
+    gap: 8px;
 }
 
-.ai-input input{
-  flex:1;
-  background:#0c0a11;
-  border:1px solid var(--border);
-  color:white;
-  padding:13px;
-  border-radius:9px;
-}
-
-/* NOTIFICATIONS */
-
-.notification{
-  display:flex;
-  gap:15px;
-  padding:17px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:10px;
-}
-
-.notification-icon{
-  font-size:22px;
-}
-
-/* MODULE */
-
-.module{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:22px;
-  margin-bottom:15px;
-}
-
-.module h2{
-  margin-top:0;
-}
-
-.module p{
-  color:var(--muted);
-  line-height:1.6;
+.ai-input input {
+    flex: 1;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 13px;
+    border-radius: 9px;
+    outline: none;
 }
 
 /* MODAL */
 
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:200;
-  padding:20px;
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 500;
 }
 
-.modal.show{
-  display:flex;
+.modal.show {
+    display: flex;
 }
 
-.modal-box{
-  background:#15121e;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:25px;
-  width:100%;
-  max-width:500px;
+.modal-box {
+    width: 100%;
+    max-width: 500px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
 }
 
-.modal-box input,
-.modal-box select{
-  width:100%;
-  background:#0c0a11;
-  border:1px solid var(--border);
-  color:white;
-  padding:13px;
-  border-radius:8px;
-  margin:8px 0 15px;
+.modal-box h2 {
+    margin-bottom: 20px;
 }
 
-.modal-actions{
-  display:flex;
-  gap:10px;
-  justify-content:flex-end;
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 /* FOOTER */
 
-.footer{
-  text-align:center;
-  color:#666174;
-  padding:30px;
-  border-top:1px solid var(--border);
-  margin-top:30px;
+footer {
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+    padding: 25px;
 }
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  .projects{
-    grid-template-columns:1fr;
-  }
+    .projects {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .workspace{
-    grid-template-columns:1fr;
-  }
-
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
-  .header{
-    padding:13px;
-  }
+    .header {
+        padding: 12px;
+    }
 
-  .logo{
-    font-size:18px;
-  }
+    .brand h1 {
+        font-size: 15px;
+    }
 
-  .online{
-    display:none;
-  }
+    main {
+        padding: 18px 12px 45px;
+    }
 
-  main{
-    padding:16px 12px 45px;
-  }
+    .hero {
+        padding: 22px;
+    }
 
-  .welcome{
-    padding:22px;
-  }
+    .hero h2 {
+        font-size: 25px;
+    }
 
-  .welcome h1{
-    font-size:27px;
-  }
+    .grid,
+    .projects,
+    .stats {
+        grid-template-columns: 1fr;
+    }
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+    .editor {
+        min-height: 450px;
+        padding: 20px;
+    }
 
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .card{
-    padding:17px;
-  }
-
-  .editor{
-    min-height:420px;
-    padding:17px;
-  }
-
+    .ai-input {
+        flex-direction: column;
+    }
 }
-
 </style>
 </head>
 
@@ -551,267 +484,222 @@ main{
 
 <header class="header">
 
-<div class="header-inner">
+    <div class="header-inner">
 
-<div class="logo">
-🎬 Whispering <span>Words</span> Studio
-<span class="online">● Studio Online</span>
-</div>
+        <div class="brand">
+            <div class="logo">🎬</div>
 
-<div class="header-actions">
+            <div>
+                <h1>Whispering Words Studio</h1>
+                <div class="status">● Studio Online</div>
+            </div>
+        </div>
 
-<button class="icon-btn" onclick="showPage('notifications')">
-🔔
-</button>
+        <div class="header-actions">
 
-<button class="icon-btn" onclick="showPage('ai')">
-🤖
-</button>
+            <button class="icon-btn" data-page="notifications">
+                🔔
+            </button>
 
-</div>
+            <button class="icon-btn" data-page="ai">
+                🤖
+            </button>
 
-</div>
+        </div>
+
+    </div>
 
 </header>
 
 
 <nav class="nav">
 
-<div class="nav-inner">
+    <div class="nav-inner">
 
-<button class="active" onclick="showPage('dashboard',this)">
-🏠 Dashboard
-</button>
+        <button class="active" data-page="dashboard">
+            🏠 Dashboard
+        </button>
 
-<button onclick="showPage('screenplay',this)">
-✍️ Screenplay
-</button>
+        <button data-page="screenplay">
+            ✍️ Screenplay
+        </button>
 
-<button onclick="showPage('story',this)">
-🧠 Story Development
-</button>
+        <button data-page="story">
+            🧠 Story Development
+        </button>
 
-<button onclick="showPage('characters',this)">
-🎭 Characters
-</button>
+        <button data-page="characters">
+            🎭 Characters
+        </button>
 
-<button onclick="showPage('world',this)">
-🌍 World & Locations
-</button>
+        <button data-page="world">
+            🌍 World & Locations
+        </button>
 
-<button onclick="showPage('director',this)">
-🎬 Director
-</button>
+        <button data-page="director">
+            🎬 Director
+        </button>
 
-<button onclick="showPage('production',this)">
-🎥 Production
-</button>
+        <button data-page="production">
+            🎥 Production
+        </button>
 
-<button onclick="showPage('post',this)">
-🎚️ Post-Production
-</button>
+        <button data-page="post">
+            🎚️ Post-Production
+        </button>
 
-</div>
+        <button data-page="school">
+            📚 School
+        </button>
+
+        <button data-page="community">
+            🤝 Community
+        </button>
+
+    </div>
 
 </nav>
 
 
 <main>
 
-
 <!-- DASHBOARD -->
 
 <section id="dashboard" class="page active">
 
-<div class="welcome">
+    <div class="hero">
 
-<h1>Your story begins here.</h1>
+        <h2>Your story begins here.</h2>
 
-<p>
-Whispering Words Studio is your AI filmmaking environment —
-from the first idea to story development, screenplay writing,
-characters, world building, directing, production and post-production.
-</p>
+        <p>
+            Welcome to Whispering Words Studio — a creative filmmaking
+            platform for developing stories, screenplays, characters,
+            worlds and complete film productions.
+        </p>
 
-<button class="primary" onclick="openNewProject()">
-＋ Create New Film
-</button>
+        <button class="primary" id="newFilmButton">
+            ＋ Create New Film
+        </button>
 
-</div>
+    </div>
 
 
-<div class="grid">
+    <div class="grid">
 
-<div class="card feature" onclick="showPage('screenplay')">
+        <div class="card clickable" data-page="screenplay">
 
-<div class="feature-icon">✍️</div>
+            <div class="card-icon">✍️</div>
 
-<h3>Screenplay Studio</h3>
+            <h3>Screenplay Studio</h3>
 
-<p>
-Develop professional screenplays, scenes,
-dialogue, structure and character arcs.
-</p>
+            <p>
+                Write and develop professional screenplays,
+                scenes, dialogue and action.
+            </p>
 
-</div>
+        </div>
 
 
-<div class="card feature" onclick="showPage('story')">
+        <div class="card clickable" data-page="story">
 
-<div class="feature-icon">🧠</div>
+            <div class="card-icon">🧠</div>
 
-<h3>Story Intelligence</h3>
+            <h3>Story Intelligence</h3>
 
-<p>
-Find story problems, improve pacing,
-discover ideas and develop stronger narratives.
-</p>
+            <p>
+                Develop story ideas, structure, themes,
+                conflict and character arcs.
+            </p>
 
-</div>
+        </div>
 
 
-<div class="card feature" onclick="showPage('characters')">
+        <div class="card clickable" data-page="characters">
 
-<div class="feature-icon">🎭</div>
+            <div class="card-icon">🎭</div>
 
-<h3>Character Studio</h3>
+            <h3>Character Studio</h3>
 
-<p>
-Build characters with personalities,
-motivations, relationships and arcs.
-</p>
+            <p>
+                Build memorable characters and detailed
+                character profiles.
+            </p>
 
-</div>
+        </div>
 
 
-<div class="card feature" onclick="showPage('world')">
+        <div class="card clickable" data-page="world">
 
-<div class="feature-icon">🌍</div>
+            <div class="card-icon">🌍</div>
 
-<h3>World Builder</h3>
+            <h3>World Builder</h3>
 
-<p>
-Create locations, environments,
-cultures and visual worlds for your story.
-</p>
+            <p>
+                Create locations, environments, cultures
+                and visual worlds for your stories.
+            </p>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 
-<div class="section-title">
+    <h2 class="section-title">Recent Projects</h2>
 
-<h2>Recent Projects</h2>
+    <div class="projects" id="projects">
 
-<button class="secondary" onclick="openNewProject()">
-＋ New Project
-</button>
+        <div class="project">
 
-</div>
+            <div class="project-title">
+                My First Film
+            </div>
 
+            <div class="project-meta">
+                Screenplay • Draft 1
+            </div>
 
-<div id="projects" class="projects">
+        </div>
 
-<div class="project">
+        <div class="project">
 
-<div class="project-title">
-My First Film
-</div>
+            <div class="project-title">
+                Untitled Story
+            </div>
 
-<div class="project-meta">
-Screenplay • Draft 1
-</div>
+            <div class="project-meta">
+                Story Development
+            </div>
 
-<div class="project-actions">
+        </div>
 
-<button class="secondary"
-onclick="showPage('screenplay')">
-Open
-</button>
+    </div>
 
-</div>
 
-</div>
+    <h2 class="section-title">Project Statistics</h2>
 
+    <div class="stats">
 
-<div class="project">
+        <div class="stat">
+            <div class="stat-number" id="projectCount">2</div>
+            <div class="stat-label">Projects</div>
+        </div>
 
-<div class="project-title">
-Untitled Story
-</div>
+        <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Characters</div>
+        </div>
 
-<div class="project-meta">
-Story Development
-</div>
+        <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Scenes</div>
+        </div>
 
-<div class="project-actions">
+        <div class="stat">
+            <div class="stat-number" id="wordCountDashboard">0</div>
+            <div class="stat-label">Words Written</div>
+        </div>
 
-<button class="secondary"
-onclick="showPage('story')">
-Open
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-
-<h2>Project Statistics</h2>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-
-<div class="stat-label">Projects</div>
-
-<div class="stat-number" id="projectCount">
-2
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-label">Characters</div>
-
-<div class="stat-number">
-0
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-label">Scenes</div>
-
-<div class="stat-number">
-0
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-label">Words Written</div>
-
-<div class="stat-number" id="wordCount">
-0
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -820,96 +708,58 @@ Open
 
 <section id="screenplay" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>✍️ Screenplay Studio</h2>
+        <h2>✍️ Screenplay Studio</h2>
 
-<button class="primary" onclick="saveScreenplay()">
-💾 Save
-</button>
+        <p>
+            Write your screenplay in a professional creative workspace.
+        </p>
 
-</div>
+    </div>
 
+    <div class="editor-toolbar">
 
-<div class="workspace">
+        <button data-insert="FADE IN:">FADE IN</button>
 
-<div class="side-panel">
+        <button data-insert="INT. ">INT.</button>
 
-<button onclick="formatText('FADE IN:')">
-🎬 Fade In
-</button>
+        <button data-insert="EXT. ">EXT.</button>
 
-<button onclick="formatText('INT. LOCATION - DAY')">
-📍 Scene Heading
-</button>
+        <button data-insert="CHARACTER NAME">CHARACTER</button>
 
-<button onclick="formatText('CHARACTER')">
-🎭 Character
-</button>
+        <button data-insert="ACTION: ">ACTION</button>
 
-<button onclick="formatText('(beat)')">
-💬 Parenthetical
-</button>
+        <button id="saveScreenplay">
+            💾 Save
+        </button>
 
-<button onclick="formatText('TRANSITION:')">
-➡️ Transition
-</button>
+    </div>
 
-</div>
-
-
-<div class="editor-panel">
-
-<div class="editor-toolbar">
-
-<button class="secondary"
-onclick="formatText('INT. LOCATION - DAY')">
-SCENE
-</button>
-
-<button class="secondary"
-onclick="formatText('CHARACTER NAME')">
-CHARACTER
-</button>
-
-<button class="secondary"
-onclick="formatText('(beat)')">
-DIALOGUE
-</button>
-
-<button class="secondary"
-onclick="formatText('ACTION: ')">
-ACTION
-</button>
-
-<button class="secondary"
-onclick="saveScreenplay()">
-SAVE
-</button>
-
-</div>
-
-
-<div
-id="editor"
-class="editor"
-contenteditable="true"
-spellcheck="true"
-oninput="updateWordCount()"
->
-FADE IN:
+    <div
+        id="editor"
+        class="editor"
+        contenteditable="true"
+        spellcheck="true"
+    >FADE IN:
 
 INT. UNKNOWN LOCATION - NIGHT
 
-The world is quiet.
-
-A story is waiting to be told.
+The story begins...
 
 </div>
 
-</div>
+    <div class="editor-info">
 
-</div>
+        <span id="wordCount">
+            0 words
+        </span>
+
+        <span>
+            Saved locally on this device
+        </span>
+
+    </div>
 
 </section>
 
@@ -918,46 +768,48 @@ A story is waiting to be told.
 
 <section id="story" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🧠 Story Development</h2>
+        <h2>🧠 Story Development</h2>
 
-</div>
+        <p>
+            Transform an idea into a stronger story with structure,
+            conflict, themes and character movement.
+        </p>
 
-<div class="module">
+        <button class="primary" id="developStory">
+            ✨ Develop My Story
+        </button>
 
-<h2>Story Architect</h2>
+    </div>
 
-<p>
-Develop your idea before writing the full screenplay.
-Whispering Words can help you explore premise, theme,
-conflict, stakes, structure, turning points and ending.
-</p>
+    <div class="grid">
 
-<button class="primary" onclick="storyIdea()">
-✨ Develop My Story
-</button>
+        <div class="card">
+            <div class="card-icon">💡</div>
+            <h3>Story Idea</h3>
+            <p>Develop the central idea of your film.</p>
+        </div>
 
-<div id="storyOutput" class="ai-message" style="display:none"></div>
+        <div class="card">
+            <div class="card-icon">🏗️</div>
+            <h3>Structure</h3>
+            <p>Explore acts, sequences and story movement.</p>
+        </div>
 
-</div>
+        <div class="card">
+            <div class="card-icon">⚔️</div>
+            <h3>Conflict</h3>
+            <p>Build meaningful internal and external conflict.</p>
+        </div>
 
+        <div class="card">
+            <div class="card-icon">❤️</div>
+            <h3>Character Arcs</h3>
+            <p>Develop character transformation and emotional journeys.</p>
+        </div>
 
-<div class="module">
-
-<h2>Story Health Check</h2>
-
-<p>
-Check pacing, character motivation, conflict,
-stakes and narrative consistency.
-</p>
-
-<button class="secondary"
-onclick="alert('Story analysis module ready for AI integration.')">
-🔍 Analyse Story
-</button>
-
-</div>
+    </div>
 
 </section>
 
@@ -966,45 +818,19 @@ onclick="alert('Story analysis module ready for AI integration.')">
 
 <section id="characters" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🎭 Character Studio</h2>
+        <h2>🎭 Character Studio</h2>
 
-<button class="primary"
-onclick="alert('Character creator coming next.')">
-＋ Create Character
-</button>
+        <p>
+            Create detailed characters for your screenplay and film.
+        </p>
 
-</div>
+        <button class="primary">
+            ＋ Create Character
+        </button>
 
-
-<div class="module">
-
-<h2>Character Intelligence</h2>
-
-<p>
-Create protagonists, antagonists, supporting characters,
-relationships, secrets, motivations and character arcs.
-</p>
-
-</div>
-
-
-<div class="projects">
-
-<div class="project">
-
-<div class="project-title">
-No characters yet
-</div>
-
-<div class="project-meta">
-Create your first character to begin building your cast.
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -1013,39 +839,19 @@ Create your first character to begin building your cast.
 
 <section id="world" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🌍 World & Locations</h2>
+        <h2>🌍 World & Locations</h2>
 
-</div>
+        <p>
+            Build the locations and environments where your story lives.
+        </p>
 
-<div class="module">
+        <button class="primary">
+            ＋ Create Location
+        </button>
 
-<h2>World Builder</h2>
-
-<p>
-Design locations, homes, streets, villages, cities,
-countries, environments and visual identities that
-fit your story.
-</p>
-
-<button class="primary">
-＋ Create Location
-</button>
-
-</div>
-
-
-<div class="module">
-
-<h2>Visual World</h2>
-
-<p>
-Future versions will connect locations with AI visual
-generation, production design and scene planning.
-</p>
-
-</div>
+    </div>
 
 </section>
 
@@ -1054,38 +860,19 @@ generation, production design and scene planning.
 
 <section id="director" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🎬 Director's Room</h2>
+        <h2>🎬 Director</h2>
 
-</div>
+        <p>
+            Plan shots, camera movement, visual language and scenes.
+        </p>
 
-<div class="module">
+        <button class="primary">
+            ＋ Create Shot Plan
+        </button>
 
-<h2>Direct the Story</h2>
-
-<p>
-Plan shots, camera movement, blocking, performances,
-lighting, mood and visual storytelling.
-</p>
-
-<button class="primary">
-＋ Create Shot Plan
-</button>
-
-</div>
-
-
-<div class="module">
-
-<h2>Director's Assistant</h2>
-
-<p>
-Your future AI director can help translate screenplay
-scenes into practical filmmaking decisions.
-</p>
-
-</div>
+    </div>
 
 </section>
 
@@ -1094,66 +881,43 @@ scenes into practical filmmaking decisions.
 
 <section id="production" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🎥 Production</h2>
+        <h2>🎥 Production</h2>
 
-</div>
+        <p>
+            Organise your film production from preparation through filming.
+        </p>
 
-<div class="grid">
+    </div>
 
-<div class="card">
+    <div class="grid">
 
-<div class="feature-icon">🎭</div>
+        <div class="card">
+            <div class="card-icon">📋</div>
+            <h3>Production Plan</h3>
+            <p>Plan your production workflow.</p>
+        </div>
 
-<h3>Cast</h3>
+        <div class="card">
+            <div class="card-icon">👥</div>
+            <h3>Cast & Crew</h3>
+            <p>Manage people involved in your production.</p>
+        </div>
 
-<p>
-Manage real and AI-generated actors.
-</p>
+        <div class="card">
+            <div class="card-icon">📅</div>
+            <h3>Schedule</h3>
+            <p>Organise production days and scenes.</p>
+        </div>
 
-</div>
+        <div class="card">
+            <div class="card-icon">💰</div>
+            <h3>Budget</h3>
+            <p>Track production resources and costs.</p>
+        </div>
 
-
-<div class="card">
-
-<div class="feature-icon">🏠</div>
-
-<h3>Locations</h3>
-
-<p>
-Organise filming locations and environments.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="feature-icon">📋</div>
-
-<h3>Production Plan</h3>
-
-<p>
-Create scenes, schedules and production tasks.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="feature-icon">🎨</div>
-
-<h3>Visual Design</h3>
-
-<p>
-Plan costumes, props, lighting and production design.
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -1162,81 +926,116 @@ Plan costumes, props, lighting and production design.
 
 <section id="post" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🎚️ Post-Production</h2>
+        <h2>🎚️ Post-Production</h2>
 
-</div>
+        <p>
+            Bring your completed footage, sound, music and visual effects
+            together.
+        </p>
 
-<div class="module">
+        <button class="primary">
+            ＋ Start Edit
+        </button>
 
-<h2>Editing Studio</h2>
+    </div>
 
-<p>
-Organise footage, scenes and sequences for the final film.
-</p>
-
-<button class="primary">
-＋ Start Edit
-</button>
-
-</div>
+</section>
 
 
-<div class="grid">
+<!-- SCHOOL -->
 
-<div class="card">
+<section id="school" class="page">
 
-<div class="feature-icon">🎵</div>
+    <div class="hero">
 
-<h3>Music</h3>
+        <h2>📚 Whispering Words School</h2>
 
-<p>
-Plan and manage the film soundtrack.
-</p>
+        <p>
+            Learn filmmaking, screenplay writing, directing,
+            production and the creative business.
+        </p>
 
-</div>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-icon">✍️</div>
+            <h3>Screenwriting</h3>
+            <p>Learn professional story and screenplay development.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎬</div>
+            <h3>Directing</h3>
+            <p>Learn visual storytelling and directing principles.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎥</div>
+            <h3>Film Production</h3>
+            <p>Understand how films move from idea to production.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💼</div>
+            <h3>Film Business</h3>
+            <p>Explore funding, pitching, networking and opportunities.</p>
+        </div>
+
+    </div>
+
+</section>
 
 
-<div class="card">
+<!-- COMMUNITY -->
 
-<div class="feature-icon">🔊</div>
+<section id="community" class="page">
 
-<h3>Sound</h3>
+    <div class="hero">
 
-<p>
-Dialogue, ambience and sound effects.
-</p>
+        <h2>🤝 Creative Community</h2>
 
-</div>
+        <p>
+            Connect writers, actors, directors, producers,
+            musicians, cinematographers and other creatives.
+        </p>
 
+        <button class="primary">
+            Explore Community
+        </button>
 
-<div class="card">
+    </div>
 
-<div class="feature-icon">✨</div>
+    <div class="grid">
 
-<h3>Visual Effects</h3>
+        <div class="card">
+            <div class="card-icon">👤</div>
+            <h3>Find Creatives</h3>
+            <p>Discover people with creative skills.</p>
+        </div>
 
-<p>
-Prepare future AI-assisted VFX workflows.
-</p>
+        <div class="card">
+            <div class="card-icon">🤝</div>
+            <h3>Collaborate</h3>
+            <p>Find people to work with on creative projects.</p>
+        </div>
 
-</div>
+        <div class="card">
+            <div class="card-icon">🎭</div>
+            <h3>Cast & Crew</h3>
+            <p>Discover potential actors and production crew.</p>
+        </div>
 
+        <div class="card">
+            <div class="card-icon">🌍</div>
+            <h3>Opportunities</h3>
+            <p>Build a future space for film opportunities.</p>
+        </div>
 
-<div class="card">
-
-<div class="feature-icon">🎨</div>
-
-<h3>Colour</h3>
-
-<p>
-Prepare the visual look of the finished film.
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -1245,38 +1044,39 @@ Prepare the visual look of the finished film.
 
 <section id="ai" class="page">
 
-<div class="section-title">
+    <div class="hero ai-box">
 
-<h2>🤖 AI Assistant</h2>
+        <h2>🤖 Sibali — Your Creative AI Assistant</h2>
 
-</div>
+        <p>
+            Sibali will eventually help you develop stories,
+            screenplays, characters, worlds and productions.
+        </p>
 
-<div class="ai-box">
+    </div>
 
-<h2>Sibali — Your Creative AI Assistant</h2>
+    <div class="ai-box">
 
-<div class="ai-message">
-Hello, filmmaker. I'm Sibali. I can help you develop
-stories, characters, scenes and filmmaking ideas.
-</div>
+        <div class="ai-message">
+            <strong>Sibali:</strong><br>
+            Hello. I'm ready to help you develop your story.
+        </div>
 
-<div id="chat"></div>
+        <div class="ai-input">
 
-<div class="ai-input">
+            <input
+                id="aiInput"
+                type="text"
+                placeholder="Ask Sibali about your story..."
+            >
 
-<input
-id="aiInput"
-placeholder="Ask Sibali about your story..."
->
+            <button class="primary" id="askAI">
+                Send
+            </button>
 
-<button class="primary"
-onclick="askAI()">
-Send
-</button>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -1285,45 +1085,25 @@ Send
 
 <section id="notifications" class="page">
 
-<div class="section-title">
+    <div class="hero">
 
-<h2>🔔 Notifications</h2>
+        <h2>🔔 Notifications</h2>
 
-</div>
+        <p>
+            Your project notifications will appear here.
+        </p>
 
-
-<div class="notification">
-
-<div class="notification-icon">🎬</div>
-
-<div>
-<strong>Welcome to Whispering Words Studio</strong>
-<p>Your filmmaking workspace is ready.</p>
-</div>
-
-</div>
-
-
-<div class="notification">
-
-<div class="notification-icon">🟣</div>
-
-<div>
-<strong>Studio development</strong>
-<p>New filmmaking modules can be added without rebuilding the entire application.</p>
-</div>
-
-</div>
+    </div>
 
 </section>
-
 
 </main>
 
 
-<footer class="footer">
+<footer>
 
-Whispering Words Studio • AI Filmmaking & Storytelling Platform
+    Whispering Words Studio<br>
+    Write. Direct. Produce. Create.
 
 </footer>
 
@@ -1334,303 +1114,294 @@ Whispering Words Studio • AI Filmmaking & Storytelling Platform
 
 <div id="projectModal" class="modal">
 
-<div class="modal-box">
+    <div class="modal-box">
 
-<h2>🎬 Create New Film</h2>
+        <h2>Create New Film</h2>
 
-<p style="color:#999">
-Start a new filmmaking project.
-</p>
+        <div class="form-group">
 
-<label>Project title</label>
+            <label for="projectTitle">
+                Film Title
+            </label>
 
-<input
-id="projectTitle"
-placeholder="Enter film title"
->
+            <input
+                id="projectTitle"
+                type="text"
+                placeholder="Enter your film title"
+            >
 
-<label>Project type</label>
+        </div>
 
-<select id="projectType">
+        <div class="form-group">
 
-<option>Feature Film</option>
-<option>Short Film</option>
-<option>Series</option>
-<option>Radio Drama</option>
-<option>Theatre</option>
+            <label for="projectType">
+                Project Type
+            </label>
 
-</select>
+            <select id="projectType">
 
+                <option value="Screenplay">
+                    Screenplay
+                </option>
 
-<div class="modal-actions">
+                <option value="Film">
+                    Film
+                </option>
 
-<button
-class="secondary"
-onclick="closeNewProject()">
-Cancel
-</button>
+                <option value="Series">
+                    Series
+                </option>
 
-<button
-class="primary"
-onclick="createProject()">
-Create Project
-</button>
+                <option value="Short Film">
+                    Short Film
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button class="secondary" id="cancelProject">
+                Cancel
+            </button>
+
+            <button class="primary" id="createProject">
+                Create Project
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
-</div>
-
-</div>
 
 <script>
 
-alert("Whispering Words JavaScript is running!");
-
-/* =========================================
+/* =========================================================
    WHISPERING WORDS STUDIO
-   CORE APPLICATION JAVASCRIPT
-   ========================================= */
+   CLEAN APPLICATION JAVASCRIPT
+   ========================================================= */
 
 "use strict";
 
-/* ---------- NAVIGATION ---------- */
 
-window.showPage = function(pageId, button) {
+/* ---------- PAGE NAVIGATION ---------- */
 
-    try {
+function showPage(pageId) {
 
-        document.querySelectorAll(".page").forEach(function(page) {
-            page.classList.remove("active");
-        });
+    const pages = document.querySelectorAll(".page");
 
-        var page = document.getElementById(pageId);
+    pages.forEach(function(page) {
+        page.classList.remove("active");
+    });
 
-        if (!page) {
-            console.error("Page not found:", pageId);
-            return;
-        }
+    const target = document.getElementById(pageId);
 
-        page.classList.add("active");
+    if (target) {
+        target.classList.add("active");
+    }
 
-        document.querySelectorAll(".nav button").forEach(function(btn) {
-            btn.classList.remove("active");
-        });
+    const navButtons = document.querySelectorAll(".nav button");
 
-        if (button) {
+    navButtons.forEach(function(button) {
+        button.classList.remove("active");
+
+        if (button.dataset.page === pageId) {
             button.classList.add("active");
-        } else {
-
-            var matchingButton =
-                document.querySelector(
-                    '.nav button[onclick*="showPage(\'' + pageId + '\'"]'
-                );
-
-            if (matchingButton) {
-                matchingButton.classList.add("active");
-            }
         }
+    });
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    } catch (error) {
-
-        console.error("Navigation error:", error);
-
-    }
-};
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 
-/* ---------- PROJECT MODAL ---------- */
+/* ---------- ALL NAVIGATION BUTTONS ---------- */
 
-window.openNewProject = function() {
+document.querySelectorAll("[data-page]").forEach(function(button) {
 
-    var modal = document.getElementById("projectModal");
+    button.addEventListener("click", function() {
 
-    if (!modal) {
-        console.error("Project modal not found.");
-        return;
-    }
+        showPage(button.dataset.page);
+
+    });
+
+});
+
+
+/* ---------- NEW FILM MODAL ---------- */
+
+const modal = document.getElementById("projectModal");
+
+const newFilmButton = document.getElementById("newFilmButton");
+
+const cancelProject = document.getElementById("cancelProject");
+
+const createProjectButton =
+    document.getElementById("createProject");
+
+
+newFilmButton.addEventListener("click", function() {
 
     modal.classList.add("show");
 
-    var titleInput = document.getElementById("projectTitle");
-
-    if (titleInput) {
-        setTimeout(function() {
-            titleInput.focus();
-        }, 100);
-    }
-};
+});
 
 
-window.closeNewProject = function() {
+cancelProject.addEventListener("click", function() {
 
-    var modal = document.getElementById("projectModal");
+    modal.classList.remove("show");
 
-    if (modal) {
+});
+
+
+modal.addEventListener("click", function(event) {
+
+    if (event.target === modal) {
         modal.classList.remove("show");
     }
-};
+
+});
 
 
 /* ---------- CREATE PROJECT ---------- */
 
-window.createProject = function() {
+createProjectButton.addEventListener("click", function() {
 
-    var titleInput =
-        document.getElementById("projectTitle");
+    const title =
+        document.getElementById("projectTitle").value.trim();
 
-    var typeInput =
-        document.getElementById("projectType");
-
-    var projects =
-        document.getElementById("projects");
-
-    if (!titleInput || !typeInput || !projects) {
-        alert("The project system could not be loaded.");
-        return;
-    }
-
-    var title =
-        titleInput.value.trim();
-
-    var type =
-        typeInput.value;
+    const type =
+        document.getElementById("projectType").value;
 
     if (!title) {
 
         alert("Please enter a film title.");
 
-        titleInput.focus();
-
         return;
     }
 
-    var project =
+
+    const projects =
+        document.getElementById("projects");
+
+
+    const project =
         document.createElement("div");
 
     project.className = "project";
 
+
     project.innerHTML =
 
-        '<div class="project-title">' +
-            escapeHTML(title) +
-        '</div>' +
+        "<div class='project-title'>" +
+        escapeHTML(title) +
+        "</div>" +
 
-        '<div class="project-meta">' +
-            escapeHTML(type) +
-            ' • Draft 1' +
-        '</div>' +
+        "<div class='project-meta'>" +
+        escapeHTML(type) +
+        " • New Project" +
+        "</div>";
 
-        '<div class="project-actions">' +
-
-            '<button class="secondary" ' +
-                'onclick="showPage(\'screenplay\')">' +
-                'Open' +
-            '</button>' +
-
-        '</div>';
 
     projects.prepend(project);
 
+
     updateProjectCount();
 
-    titleInput.value = "";
 
-    closeNewProject();
+    document.getElementById("projectTitle").value = "";
 
-    alert("Project created successfully!");
-};
+
+    modal.classList.remove("show");
+
+
+    alert("Project created successfully.");
+
+});
 
 
 /* ---------- SECURITY ---------- */
 
-window.escapeHTML = function(text) {
+function escapeHTML(text) {
 
-    var div =
-        document.createElement("div");
+    const div = document.createElement("div");
 
     div.textContent = text;
 
     return div.innerHTML;
-};
+
+}
 
 
-/* ---------- SCREENPLAY ---------- */
+/* ---------- SCREENPLAY EDITOR ---------- */
 
-window.formatText = function(text) {
+const editor =
+    document.getElementById("editor");
 
-    var editor =
-        document.getElementById("editor");
+const wordCount =
+    document.getElementById("wordCount");
 
-    if (!editor) {
-        return;
-    }
-
-    editor.focus();
-
-    var selection =
-        window.getSelection();
-
-    if (
-        selection &&
-        selection.rangeCount > 0
-    ) {
-
-        var range =
-            selection.getRangeAt(0);
-
-        if (editor.contains(range.commonAncestorContainer)) {
-
-            range.deleteContents();
-
-            var node =
-                document.createTextNode(
-                    text + "\n"
-                );
-
-            range.insertNode(node);
-
-            range.setStartAfter(node);
-
-            range.collapse(true);
-
-            selection.removeAllRanges();
-
-            selection.addRange(range);
-
-        } else {
-
-            editor.innerText +=
-                "\n" + text + "\n";
-
-        }
-
-    } else {
-
-        editor.innerText +=
-            "\n" + text + "\n";
-
-    }
-
-    updateWordCount();
-};
+const dashboardWordCount =
+    document.getElementById("wordCountDashboard");
 
 
-window.saveScreenplay = function() {
+function updateWordCount() {
 
-    var editor =
-        document.getElementById("editor");
+    const text =
+        editor.innerText.trim();
 
-    if (!editor) {
-        alert("Screenplay editor not found.");
-        return;
-    }
+    const words =
+        text === ""
+        ? 0
+        : text.split(/\s+/).length;
 
-    try {
+
+    wordCount.textContent =
+        words + (words === 1 ? " word" : " words");
+
+
+    dashboardWordCount.textContent =
+        words;
+
+}
+
+
+editor.addEventListener("input", updateWordCount);
+
+
+/* ---------- SCREENPLAY INSERT BUTTONS ---------- */
+
+document.querySelectorAll("[data-insert]").forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        const text = button.dataset.insert;
+
+        editor.focus();
+
+        document.execCommand(
+            "insertText",
+            false,
+            text + "\n"
+        );
+
+        updateWordCount();
+
+    });
+
+});
+
+
+/* ---------- SAVE SCREENPLAY ---------- */
+
+document
+    .getElementById("saveScreenplay")
+    .addEventListener("click", function() {
 
         localStorage.setItem(
             "whisperingWordsScreenplay",
@@ -1638,281 +1409,118 @@ window.saveScreenplay = function() {
         );
 
         alert(
-            "Screenplay saved successfully on this device."
+            "Screenplay saved on this device."
         );
 
-    } catch (error) {
-
-        alert(
-            "The screenplay could not be saved on this device."
-        );
-
-        console.error(error);
-    }
-};
+    });
 
 
-window.loadScreenplay = function() {
+/* ---------- LOAD SCREENPLAY ---------- */
 
-    var editor =
-        document.getElementById("editor");
-
-    if (!editor) {
-        return;
-    }
-
-    try {
-
-        var saved =
-            localStorage.getItem(
-                "whisperingWordsScreenplay"
-            );
-
-        if (saved) {
-            editor.innerText = saved;
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Could not load screenplay:",
-            error
-        );
-    }
-
-    updateWordCount();
-};
+const savedScreenplay =
+    localStorage.getItem(
+        "whisperingWordsScreenplay"
+    );
 
 
-window.updateWordCount = function() {
+if (savedScreenplay) {
 
-    var editor =
-        document.getElementById("editor");
+    editor.innerText = savedScreenplay;
 
-    var counter =
-        document.getElementById("wordCount");
-
-    if (!editor || !counter) {
-        return;
-    }
-
-    var text =
-        editor.innerText.trim();
-
-    var words =
-        text ?
-        text.split(/\s+/).length :
-        0;
-
-    counter.textContent =
-        words.toLocaleString();
-};
+}
 
 
-/* ---------- STORY DEVELOPMENT ---------- */
-
-window.storyIdea = function() {
-
-    var output =
-        document.getElementById("storyOutput");
-
-    if (!output) {
-        return;
-    }
-
-    output.style.display = "block";
-
-    output.innerHTML =
-
-        "<strong>Story Architect</strong><br><br>" +
-
-        "Let's develop your story. Start with these five " +
-        "questions:<br><br>" +
-
-        "<strong>1. Premise:</strong> " +
-        "What is your story about?<br><br>" +
-
-        "<strong>2. Protagonist:</strong> " +
-        "Who is the main character?<br><br>" +
-
-        "<strong>3. Goal:</strong> " +
-        "What do they want?<br><br>" +
-
-        "<strong>4. Conflict:</strong> " +
-        "What stands in their way?<br><br>" +
-
-        "<strong>5. Stakes:</strong> " +
-        "What happens if they fail?";
-};
+updateWordCount();
 
 
-/* ---------- AI ASSISTANT ---------- */
+/* ---------- PROJECT COUNT ---------- */
 
-window.askAI = function() {
+function updateProjectCount() {
 
-    var input =
-        document.getElementById("aiInput");
-
-    var chat =
-        document.getElementById("chat");
-
-    if (!input || !chat) {
-        return;
-    }
-
-    var message =
-        input.value.trim();
-
-    if (!message) {
-        return;
-    }
-
-    var userMessage =
-        document.createElement("div");
-
-    userMessage.className =
-        "ai-message";
-
-    userMessage.innerHTML =
-        "<strong>You:</strong><br>" +
-        escapeHTML(message);
-
-    chat.appendChild(userMessage);
-
-    input.value = "";
-
-    var aiMessage =
-        document.createElement("div");
-
-    aiMessage.className =
-        "ai-message";
-
-    aiMessage.innerHTML =
-
-        "<strong>Sibali:</strong><br>" +
-
-        "I understand your creative question. " +
-
-        "The Sibali AI intelligence layer is ready " +
-        "for connection to the secure AI backend. " +
-
-        "Once connected, Sibali will be able to " +
-        "analyse stories, develop characters, " +
-        "improve scenes and help build your film.";
-
-    chat.appendChild(aiMessage);
-
-    chat.scrollTop =
-        chat.scrollHeight;
-};
-
-
-/* ---------- PROJECT STATISTICS ---------- */
-
-window.updateProjectCount = function() {
-
-    var projects =
+    const projects =
         document.querySelectorAll(
             "#projects .project"
         );
 
-    var counter =
-        document.getElementById(
-            "projectCount"
-        );
+    document.getElementById(
+        "projectCount"
+    ).textContent = projects.length;
 
-    if (counter) {
-
-        counter.textContent =
-            projects.length;
-    }
-};
-
-
-/* ---------- INITIALISE APPLICATION ---------- */
-
-function initialiseWhisperingWords() {
-
-    console.log(
-        "Whispering Words Studio initialising..."
-    );
-
-    try {
-
-        loadScreenplay();
-
-        updateProjectCount();
-
-        var modal =
-            document.getElementById(
-                "projectModal"
-            );
-
-        if (modal) {
-
-            modal.addEventListener(
-                "click",
-                function(event) {
-
-                    if (event.target === modal) {
-                        closeNewProject();
-                    }
-
-                }
-            );
-        }
-
-        var aiInput =
-            document.getElementById(
-                "aiInput"
-            );
-
-        if (aiInput) {
-
-            aiInput.addEventListener(
-                "keydown",
-                function(event) {
-
-                    if (event.key === "Enter") {
-
-                        event.preventDefault();
-
-                        askAI();
-                    }
-
-                }
-            );
-        }
-
-        console.log(
-            "Whispering Words Studio ready."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Application initialisation error:",
-            error
-        );
-    }
 }
 
 
-/* ---------- START ---------- */
+/* ---------- STORY BUTTON ---------- */
 
-if (
-    document.readyState === "loading"
-) {
+document
+    .getElementById("developStory")
+    .addEventListener("click", function() {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initialiseWhisperingWords
+        alert(
+            "Story Development is ready for the Sibali AI integration."
+        );
+
+    });
+
+
+/* ---------- AI ASSISTANT ---------- */
+
+const aiInput =
+    document.getElementById("aiInput");
+
+const askAIButton =
+    document.getElementById("askAI");
+
+
+function askSibali() {
+
+    const question =
+        aiInput.value.trim();
+
+    if (!question) {
+
+        alert("Please type a question for Sibali.");
+
+        return;
+    }
+
+
+    alert(
+        "Sibali AI connection will be added in the next stage."
     );
 
-} else {
+    aiInput.value = "";
 
-    initialiseWhisperingWords();
-} 
+}
+
+
+askAIButton.addEventListener(
+    "click",
+    askSibali
+);
+
+
+aiInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            askSibali();
+
+        }
+
+    }
+);
+
+
+/* ---------- STARTUP ---------- */
+
+console.log(
+    "Whispering Words Studio loaded successfully."
+);
+
 </script>
 
 </body>
