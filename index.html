@@ -1384,344 +1384,533 @@ Create Project
 
 
 <script>
+ /* =========================================
+   WHISPERING WORDS STUDIO
+   CORE APPLICATION JAVASCRIPT
+   ========================================= */
 
-/* NAVIGATION */
+"use strict";
 
-function showPage(pageId,button){
+/* ---------- NAVIGATION ---------- */
 
-  document.querySelectorAll('.page')
-    .forEach(page => page.classList.remove('active'));
+window.showPage = function(pageId, button) {
 
-  const page=document.getElementById(pageId);
+    try {
 
-  if(page){
-    page.classList.add('active');
-  }
+        document.querySelectorAll(".page").forEach(function(page) {
+            page.classList.remove("active");
+        });
 
-  document.querySelectorAll('.nav button')
-    .forEach(btn => btn.classList.remove('active'));
+        var page = document.getElementById(pageId);
 
-  if(button){
-    button.classList.add('active');
-  }
+        if (!page) {
+            console.error("Page not found:", pageId);
+            return;
+        }
 
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
+        page.classList.add("active");
 
-}
+        document.querySelectorAll(".nav button").forEach(function(btn) {
+            btn.classList.remove("active");
+        });
 
+        if (button) {
+            button.classList.add("active");
+        } else {
 
-/* PROJECT MODAL */
+            var matchingButton =
+                document.querySelector(
+                    '.nav button[onclick*="showPage(\'' + pageId + '\'"]'
+                );
 
-function openNewProject(){
+            if (matchingButton) {
+                matchingButton.classList.add("active");
+            }
+        }
 
-  document
-    .getElementById('projectModal')
-    .classList.add('show');
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
-}
+    } catch (error) {
 
-
-function closeNewProject(){
-
-  document
-    .getElementById('projectModal')
-    .classList.remove('show');
-
-}
-
-
-  function createProject(){
-
-  const title =
-    document.getElementById('projectTitle').value.trim();
-
-  const type =
-    document.getElementById('projectType').value;
-
-  if(!title){
-    alert('Please enter a film title.');
-    return;
-  }
-
-  const projects = document.getElementById('projects');
-
-  const project = document.createElement('div');
-  project.className = 'project';
-
-  project.innerHTML = `
-    <div class="project-title">
-      ${escapeHTML(title)}
-    </div>
-
-    <div class="project-meta">
-      ${escapeHTML(type)} • Draft 1
-    </div>
-
-    <div class="project-actions">
-      <button class="secondary"
-        onclick="showPage('screenplay')">
-        Open
-      </button>
-    </div>
-  `;
-
-  projects.prepend(project);
-
-  updateProjectCount();
-
-  document.getElementById('projectTitle').value = '';
-
-  closeNewProject();
-
-  alert('Project created successfully!');
-}
-
-
-function escapeHTML(text){
-
-  const div = document.createElement('div');
-
-  div.textContent = text;
-
-  return div.innerHTML;
-}
-
-
-/* SCREENPLAY */
-
-function formatText(text){
-
-  const editor = document.getElementById('editor');
-
-  if(!editor) return;
-
-  editor.focus();
-
-  const selection = window.getSelection();
-
-  if(selection.rangeCount > 0){
-
-    const range = selection.getRangeAt(0);
-
-    range.deleteContents();
-
-    const node = document.createTextNode(
-      text + '\n'
-    );
-
-    range.insertNode(node);
-
-    range.setStartAfter(node);
-    range.collapse(true);
-
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-  }else{
-
-    editor.innerText += '\n' + text + '\n';
-
-  }
-
-  updateWordCount();
-}
-
-
-function saveScreenplay(){
-
-  const editor = document.getElementById('editor');
-
-  if(!editor) return;
-
-  localStorage.setItem(
-    'whisperingWordsScreenplay',
-    editor.innerText
-  );
-
-  alert('Screenplay saved on this device.');
-}
-
-
-function loadScreenplay(){
-
-  const saved =
-    localStorage.getItem(
-      'whisperingWordsScreenplay'
-    );
-
-  const editor =
-    document.getElementById('editor');
-
-  if(saved && editor){
-
-    editor.innerText = saved;
-
-  }
-
-  updateWordCount();
-}
-
-
-function updateWordCount(){
-
-  const editor =
-    document.getElementById('editor');
-
-  const counter =
-    document.getElementById('wordCount');
-
-  if(!editor || !counter) return;
-
-  const text =
-    editor.innerText.trim();
-
-  const words =
-    text ? text.split(/\s+/).length : 0;
-
-  counter.textContent =
-    words.toLocaleString();
-}
-
-
-/* STORY DEVELOPMENT */
-
-function storyIdea(){
-
-  const output =
-    document.getElementById('storyOutput');
-
-  if(!output) return;
-
-  output.style.display = 'block';
-
-  output.innerHTML = `
-    <strong>Story Architect</strong><br><br>
-
-    Let's develop your story. Start with these five
-    questions:<br><br>
-
-    <strong>1. Premise:</strong>
-    What is your story about?<br>
-
-    <strong>2. Protagonist:</strong>
-    Who is the main character?<br>
-
-    <strong>3. Goal:</strong>
-    What do they want?<br>
-
-    <strong>4. Conflict:</strong>
-    What stands in their way?<br>
-
-    <strong>5. Stakes:</strong>
-    What happens if they fail?
-  `;
-
-}
-
-
-/* AI ASSISTANT */
-
-function askAI(){
-
-  const input =
-    document.getElementById('aiInput');
-
-  const chat =
-    document.getElementById('chat');
-
-  if(!input || !chat) return;
-
-  const message =
-    input.value.trim();
-
-  if(!message) return;
-
-  const userMessage =
-    document.createElement('div');
-
-  userMessage.className =
-    'ai-message';
-
-  userMessage.innerHTML =
-    '<strong>You:</strong><br>' +
-    escapeHTML(message);
-
-  chat.appendChild(userMessage);
-
-  input.value = '';
-
-  const aiMessage =
-    document.createElement('div');
-
-  aiMessage.className =
-    'ai-message';
-
-  aiMessage.innerHTML = `
-    <strong>Sibali:</strong><br>
-    I understand your creative question.
-    The AI intelligence layer can be connected next
-    so I can analyse your story, develop characters,
-    improve scenes and help build your film.
-  `;
-
-  chat.appendChild(aiMessage);
-
-}
-
-
-/* PROJECT STATISTICS */
-
-function updateProjectCount(){
-
-  const projects =
-    document.querySelectorAll(
-      '#projects .project'
-    );
-
-  const counter =
-    document.getElementById('projectCount');
-
-  if(counter){
-
-    counter.textContent =
-      projects.length;
-
-  }
-
-}
-
-
-/* CLOSE MODAL WHEN CLICKING OUTSIDE */
-
-document
-  .getElementById('projectModal')
-  .addEventListener('click', function(event){
-
-    if(event.target === this){
-
-      closeNewProject();
+        console.error("Navigation error:", error);
 
     }
+};
 
-  });
+
+/* ---------- PROJECT MODAL ---------- */
+
+window.openNewProject = function() {
+
+    var modal = document.getElementById("projectModal");
+
+    if (!modal) {
+        console.error("Project modal not found.");
+        return;
+    }
+
+    modal.classList.add("show");
+
+    var titleInput = document.getElementById("projectTitle");
+
+    if (titleInput) {
+        setTimeout(function() {
+            titleInput.focus();
+        }, 100);
+    }
+};
 
 
-/* LOAD SAVED SCREENPLAY */
+window.closeNewProject = function() {
 
-document.addEventListener(
-  'DOMContentLoaded',
-  function(){
+    var modal = document.getElementById("projectModal");
 
-    loadScreenplay();
+    if (modal) {
+        modal.classList.remove("show");
+    }
+};
+
+
+/* ---------- CREATE PROJECT ---------- */
+
+window.createProject = function() {
+
+    var titleInput =
+        document.getElementById("projectTitle");
+
+    var typeInput =
+        document.getElementById("projectType");
+
+    var projects =
+        document.getElementById("projects");
+
+    if (!titleInput || !typeInput || !projects) {
+        alert("The project system could not be loaded.");
+        return;
+    }
+
+    var title =
+        titleInput.value.trim();
+
+    var type =
+        typeInput.value;
+
+    if (!title) {
+
+        alert("Please enter a film title.");
+
+        titleInput.focus();
+
+        return;
+    }
+
+    var project =
+        document.createElement("div");
+
+    project.className = "project";
+
+    project.innerHTML =
+
+        '<div class="project-title">' +
+            escapeHTML(title) +
+        '</div>' +
+
+        '<div class="project-meta">' +
+            escapeHTML(type) +
+            ' • Draft 1' +
+        '</div>' +
+
+        '<div class="project-actions">' +
+
+            '<button class="secondary" ' +
+                'onclick="showPage(\'screenplay\')">' +
+                'Open' +
+            '</button>' +
+
+        '</div>';
+
+    projects.prepend(project);
 
     updateProjectCount();
 
-  }
-);
+    titleInput.value = "";
 
+    closeNewProject();
+
+    alert("Project created successfully!");
+};
+
+
+/* ---------- SECURITY ---------- */
+
+window.escapeHTML = function(text) {
+
+    var div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+};
+
+
+/* ---------- SCREENPLAY ---------- */
+
+window.formatText = function(text) {
+
+    var editor =
+        document.getElementById("editor");
+
+    if (!editor) {
+        return;
+    }
+
+    editor.focus();
+
+    var selection =
+        window.getSelection();
+
+    if (
+        selection &&
+        selection.rangeCount > 0
+    ) {
+
+        var range =
+            selection.getRangeAt(0);
+
+        if (editor.contains(range.commonAncestorContainer)) {
+
+            range.deleteContents();
+
+            var node =
+                document.createTextNode(
+                    text + "\n"
+                );
+
+            range.insertNode(node);
+
+            range.setStartAfter(node);
+
+            range.collapse(true);
+
+            selection.removeAllRanges();
+
+            selection.addRange(range);
+
+        } else {
+
+            editor.innerText +=
+                "\n" + text + "\n";
+
+        }
+
+    } else {
+
+        editor.innerText +=
+            "\n" + text + "\n";
+
+    }
+
+    updateWordCount();
+};
+
+
+window.saveScreenplay = function() {
+
+    var editor =
+        document.getElementById("editor");
+
+    if (!editor) {
+        alert("Screenplay editor not found.");
+        return;
+    }
+
+    try {
+
+        localStorage.setItem(
+            "whisperingWordsScreenplay",
+            editor.innerText
+        );
+
+        alert(
+            "Screenplay saved successfully on this device."
+        );
+
+    } catch (error) {
+
+        alert(
+            "The screenplay could not be saved on this device."
+        );
+
+        console.error(error);
+    }
+};
+
+
+window.loadScreenplay = function() {
+
+    var editor =
+        document.getElementById("editor");
+
+    if (!editor) {
+        return;
+    }
+
+    try {
+
+        var saved =
+            localStorage.getItem(
+                "whisperingWordsScreenplay"
+            );
+
+        if (saved) {
+            editor.innerText = saved;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load screenplay:",
+            error
+        );
+    }
+
+    updateWordCount();
+};
+
+
+window.updateWordCount = function() {
+
+    var editor =
+        document.getElementById("editor");
+
+    var counter =
+        document.getElementById("wordCount");
+
+    if (!editor || !counter) {
+        return;
+    }
+
+    var text =
+        editor.innerText.trim();
+
+    var words =
+        text ?
+        text.split(/\s+/).length :
+        0;
+
+    counter.textContent =
+        words.toLocaleString();
+};
+
+
+/* ---------- STORY DEVELOPMENT ---------- */
+
+window.storyIdea = function() {
+
+    var output =
+        document.getElementById("storyOutput");
+
+    if (!output) {
+        return;
+    }
+
+    output.style.display = "block";
+
+    output.innerHTML =
+
+        "<strong>Story Architect</strong><br><br>" +
+
+        "Let's develop your story. Start with these five " +
+        "questions:<br><br>" +
+
+        "<strong>1. Premise:</strong> " +
+        "What is your story about?<br><br>" +
+
+        "<strong>2. Protagonist:</strong> " +
+        "Who is the main character?<br><br>" +
+
+        "<strong>3. Goal:</strong> " +
+        "What do they want?<br><br>" +
+
+        "<strong>4. Conflict:</strong> " +
+        "What stands in their way?<br><br>" +
+
+        "<strong>5. Stakes:</strong> " +
+        "What happens if they fail?";
+};
+
+
+/* ---------- AI ASSISTANT ---------- */
+
+window.askAI = function() {
+
+    var input =
+        document.getElementById("aiInput");
+
+    var chat =
+        document.getElementById("chat");
+
+    if (!input || !chat) {
+        return;
+    }
+
+    var message =
+        input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+    var userMessage =
+        document.createElement("div");
+
+    userMessage.className =
+        "ai-message";
+
+    userMessage.innerHTML =
+        "<strong>You:</strong><br>" +
+        escapeHTML(message);
+
+    chat.appendChild(userMessage);
+
+    input.value = "";
+
+    var aiMessage =
+        document.createElement("div");
+
+    aiMessage.className =
+        "ai-message";
+
+    aiMessage.innerHTML =
+
+        "<strong>Sibali:</strong><br>" +
+
+        "I understand your creative question. " +
+
+        "The Sibali AI intelligence layer is ready " +
+        "for connection to the secure AI backend. " +
+
+        "Once connected, Sibali will be able to " +
+        "analyse stories, develop characters, " +
+        "improve scenes and help build your film.";
+
+    chat.appendChild(aiMessage);
+
+    chat.scrollTop =
+        chat.scrollHeight;
+};
+
+
+/* ---------- PROJECT STATISTICS ---------- */
+
+window.updateProjectCount = function() {
+
+    var projects =
+        document.querySelectorAll(
+            "#projects .project"
+        );
+
+    var counter =
+        document.getElementById(
+            "projectCount"
+        );
+
+    if (counter) {
+
+        counter.textContent =
+            projects.length;
+    }
+};
+
+
+/* ---------- INITIALISE APPLICATION ---------- */
+
+function initialiseWhisperingWords() {
+
+    console.log(
+        "Whispering Words Studio initialising..."
+    );
+
+    try {
+
+        loadScreenplay();
+
+        updateProjectCount();
+
+        var modal =
+            document.getElementById(
+                "projectModal"
+            );
+
+        if (modal) {
+
+            modal.addEventListener(
+                "click",
+                function(event) {
+
+                    if (event.target === modal) {
+                        closeNewProject();
+                    }
+
+                }
+            );
+        }
+
+        var aiInput =
+            document.getElementById(
+                "aiInput"
+            );
+
+        if (aiInput) {
+
+            aiInput.addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (event.key === "Enter") {
+
+                        event.preventDefault();
+
+                        askAI();
+                    }
+
+                }
+            );
+        }
+
+        console.log(
+            "Whispering Words Studio ready."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Application initialisation error:",
+            error
+        );
+    }
+}
+
+
+/* ---------- START ---------- */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseWhisperingWords
+    );
+
+} else {
+
+    initialiseWhisperingWords();
+} 
 </script>
 
 </body>
